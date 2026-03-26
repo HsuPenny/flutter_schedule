@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 30),
             HomeRecordCard(changePage: widget.changePage),
             const SizedBox(height: 30),
-            HomeStatisticsCard()
+            const HomeStatisticsCard()
           ],
         ),
       ),
