@@ -53,9 +53,9 @@ class _RecordPageState extends State<RecordPage> {
           '紀錄',
           style: MyTextStyle.white(24, fontWeight: FontWeight.w700),
         ),
-        actions: [
-          const RecordFilterButton(),
-          const SizedBox(width: 16)
+        actions: const [
+          RecordFilterButton(),
+          SizedBox(width: 16)
         ],
       );
     }
@@ -71,12 +71,14 @@ class _RecordPageState extends State<RecordPage> {
               spacing: 12,
               children: [
                 DatePickerField(
+                  initialDate: filterController.getStartDate(),
                   onChanged: (date) {
                     filterController.setStartDate(date);
                   }
                 ),
                 Text('~', style: MyTextStyle.darkAqua(20)),
                 DatePickerField(
+                  initialDate: filterController.getEndDate(),
                   onChanged: (date) {
                     filterController.setEndDate(date);
                   }

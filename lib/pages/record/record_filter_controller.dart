@@ -7,6 +7,17 @@ class FilterController extends GetxController {
   Rx<DateTime> endDate = DateTime.now().obs;
   RxList<StatusFilter> statusList = RxList<StatusFilter>();
 
+  @override
+  void onInit() {
+    super.onInit();
+    DateTime now = DateTime.now();
+    DateTime start = DateTime(now.year, now.month, now.day - 7);
+    DateTime end = DateTime(now.year, now.month, now.day, 23, 59, 59, 999, 999);
+    startDate.value = start;
+    endDate.value = end;
+    statusList.clear();
+  }
+
   //日期
   void setStartDate(DateTime date) {
     startDate.value = date;

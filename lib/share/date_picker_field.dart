@@ -3,20 +3,21 @@ import 'package:app_schedule/my_text_style.dart';
 import 'package:flutter/material.dart';
 
 class DatePickerField extends StatefulWidget {
+  final DateTime initialDate;
   final Function(DateTime date) onChanged;
-  const DatePickerField({super.key, required this.onChanged});
+  const DatePickerField({super.key, required this.initialDate, required this.onChanged});
 
   @override
   State<StatefulWidget> createState() => _DatePickerFieldState();
 }
 
 class _DatePickerFieldState extends State<DatePickerField> {
-  DateTime _date = DateTime.now();
+  late DateTime _date = widget.initialDate;
 
   Future<void> _pickDate() async {
     DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: _date,
+      initialDate: widget.initialDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
