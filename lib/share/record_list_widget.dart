@@ -33,7 +33,7 @@ class RecordListWidget extends StatelessWidget {
                   if (item.time != null)
                     Text(
                       item.time!,
-                      style: MyTextStyle.darkGrey(16),
+                      style: MyTextStyle.black(16),
                     ),
                 ],
               )

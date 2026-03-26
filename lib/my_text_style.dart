@@ -18,7 +18,7 @@ class MyTextStyle {
     return TextStyle(color: MyColor.white, fontSize: fontSize, fontWeight: fontWeight);
   }
   static TextStyle coralPink(double fontSize, {FontWeight fontWeight = FontWeight.w400}) {
-    return TextStyle(color: MyColor.coralPink, fontSize: fontSize, fontWeight: fontWeight);
+    return TextStyle(color: MyColor.red, fontSize: fontSize, fontWeight: fontWeight);
   }
   static TextStyle yellow(double fontSize, {FontWeight fontWeight = FontWeight.w400}) {
     return TextStyle(color: MyColor.yellow, fontSize: fontSize, fontWeight: fontWeight);

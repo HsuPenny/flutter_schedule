@@ -328,13 +328,13 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              buildColorTag(color: MyColor.darkAqua, tag: '完成'),
+              buildColorTag(color: MyColor.green, tag: '完成'),
               const SizedBox(height: 8),
-              buildColorTag(color: MyColor.aqua, tag: '進行中'),
+              buildColorTag(color: MyColor.orange, tag: '進行中'),
               const SizedBox(height: 8),
               buildColorTag(color: MyColor.lightGrey, tag: '尚未開始'),
               const SizedBox(height: 8),
-              buildColorTag(color: MyColor.coralPink, tag: '逾期'),
+              buildColorTag(color: MyColor.red, tag: '逾期'),
             ],
           )
         ],
@@ -349,7 +349,7 @@ class _HomePageState extends State<HomePage> {
           case 0: //完成
             return PieChartSectionData(
               value: 12,
-              color: MyColor.darkAqua,
+              color: MyColor.green,
               radius: radius,
               title: isTouched ? '12' : '',
               titleStyle: MyTextStyle.white(14)
@@ -357,7 +357,7 @@ class _HomePageState extends State<HomePage> {
           case 1: //進行中
             return PieChartSectionData(
               value: 3,
-              color: MyColor.aqua,
+              color: MyColor.orange,
               radius: radius,
               title: isTouched ? '3' : '',
               titleStyle: MyTextStyle.white(14)
@@ -373,7 +373,7 @@ class _HomePageState extends State<HomePage> {
           case 3: //逾期
             return PieChartSectionData(
               value: 1,
-              color: MyColor.coralPink,
+              color: MyColor.red,
               radius: radius,
               title: isTouched ? '1' : '',
               titleStyle: MyTextStyle.white(14)

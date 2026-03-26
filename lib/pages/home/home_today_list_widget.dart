@@ -20,7 +20,7 @@ class HomeTodayListWidget extends StatelessWidget {
         color = MyColor.orange;
         break;
       case 2: //逾期
-        color = MyColor.coralPink;
+        color = MyColor.red;
         break;
       case 3: //完成
         color = MyColor.green;

@@ -10,23 +10,25 @@ class StatusTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color bgColor;
-    Color bdColor = Colors.transparent;
+    Color bgColor = Colors.transparent;
+    Color bdColor;
     Color txtColor = MyColor.white;
     String text;
     if (item.status == 0) { //未開始
-      bgColor = Colors.transparent;
       bdColor = MyColor.darkGrey;
       txtColor = MyColor.darkGrey;
       text = '尚未開始';
     } else if (item.status == 1) { //進行中
       bgColor = MyColor.orange;
+      bdColor = Colors.transparent;
       text = '進行中';
     } else if (item.status == 2) { //逾期
-      bgColor = MyColor.coralPink;
+      bdColor = MyColor.red;
+      txtColor = MyColor.red;
       text = '逾期';
     } else { //完成
-      bgColor = MyColor.green;
+      bdColor = MyColor.green;
+      txtColor = MyColor.green;
       text = '完成';
     }
     return Container(
