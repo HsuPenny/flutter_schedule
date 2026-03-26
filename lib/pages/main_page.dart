@@ -164,10 +164,10 @@ class CircularFab extends StatelessWidget {
         customBorder: const CircleBorder(),
         onTap: onPressed,
         child: const SizedBox(
-          width: 50,
-          height: 50,
+          width: 45,
+          height: 45,
           child: Center(
-            child: Icon(Icons.add, size: 32, color: Colors.white),
+            child: Icon(Icons.add, size: 28, color: Colors.white),
           ),
         ),
       ),

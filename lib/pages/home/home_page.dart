@@ -1,11 +1,11 @@
 import 'package:app_schedule/my_text_style.dart';
 import 'package:app_schedule/pages/main_page.dart';
-import 'package:app_schedule/share/my_filled_button.dart';
 import 'package:app_schedule/share/record_list_widget.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import 'home_today_list_widget.dart';
 import '../../model/schedule_item.dart';
 import '../../my_color.dart';
 
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
   //-----mainView
     PreferredSizeWidget get appBar {
       return AppBar(
-        toolbarHeight: screenHeight * 0.08,
+        toolbarHeight: screenHeight * 0.06,
         backgroundColor: MyColor.aqua,
         automaticallyImplyLeading: false, //不加返回鍵
         title: Text(
@@ -97,8 +97,8 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [shadow]
             ),
-            // child: buildTodaySchedule()
-            child: todayNoSchedule
+            child: buildTodaySchedule()
+            // child: todayNoSchedule
           )
         ],
       );
@@ -115,11 +115,10 @@ class _HomePageState extends State<HomePage> {
               'assets/png/calendar.png',
             ),
             Text(
-              '今日沒有安排行程喔！',
-              style: MyTextStyle.black(16),
+              '今日沒有安排行程，可以好好休息～',
+              style: MyTextStyle.darkGrey(14),
             ),
             const SizedBox(height: 12),
-            addButton
           ],
         ),
       );
@@ -131,7 +130,7 @@ class _HomePageState extends State<HomePage> {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: list.length,
         itemBuilder: (context, index) {
-          return RecordListWidget(item: list[index]);
+          return HomeTodayListWidget(item: list[index]);
         },
         separatorBuilder: (context, index) {
           return Container(
@@ -193,7 +192,6 @@ class _HomePageState extends State<HomePage> {
               style: MyTextStyle.black(16),
             ),
             const SizedBox(height: 12),
-            addButton
           ],
         ),
       );
@@ -228,11 +226,11 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Text(
                   '查看更多',
-                  style: MyTextStyle.lightGrey(14),
+                  style: MyTextStyle.darkAqua(14, fontWeight: FontWeight.w500),
                 ),
                 SvgPicture.asset(
                   width: 14,
-                  color: MyColor.lightGrey,
+                  color: MyColor.darkAqua,
                   'assets/svgs/double_arrow.svg',
                 )
               ],
@@ -285,7 +283,6 @@ class _HomePageState extends State<HomePage> {
             style: MyTextStyle.black(16),
           ),
           const SizedBox(height: 12),
-          addButton
         ],
       );
     }
@@ -403,18 +400,6 @@ class _HomePageState extends State<HomePage> {
         ],
       );
     }
-
-    ///新增行程按鈕
-    Widget get addButton {
-      return MyFilledButton(
-        text: '＋新增行程',
-        style: MyTextStyle.white(14),
-        color: MyColor.aqua,
-        onPressed: () {
-          gotoAddNewSchedule();
-        }
-      );
-    }
   //-----subView
 
   //-----function
@@ -433,17 +418,13 @@ class _HomePageState extends State<HomePage> {
           blurRadius: 8
       );
     }
-
-    void gotoAddNewSchedule() {
-
-    }
   //-----function
 }
 
 List<ScheduleItem> list = [
-  ScheduleItem.init(name: '拜訪客戶A', status: 2),
-  ScheduleItem.init(name: '會議', status: 0),
-  ScheduleItem.init(name: '視察工地B', status: 1),
+  ScheduleItem.init(name: '拜訪客戶A', status: 2, time: '10:00'),
+  ScheduleItem.init(name: '會議', status: 0, time: '14:30'),
+  ScheduleItem.init(name: '視察工地B', status: 1, time: '18:00'),
 ];
 List<ScheduleItem> recordList = [
   ScheduleItem.init(name: '拜訪客戶A', status: 3, time: '2025/08/20 14:30'),
