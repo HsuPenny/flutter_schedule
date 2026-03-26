@@ -3,7 +3,8 @@ import 'package:app_schedule/my_text_style.dart';
 import 'package:flutter/material.dart';
 
 class DatePickerField extends StatefulWidget {
-  const DatePickerField({super.key});
+  final Function(DateTime date) onChanged;
+  const DatePickerField({super.key, required this.onChanged});
 
   @override
   State<StatefulWidget> createState() => _DatePickerFieldState();
@@ -11,13 +12,8 @@ class DatePickerField extends StatefulWidget {
 
 class _DatePickerFieldState extends State<DatePickerField> {
   DateTime _date = DateTime.now();
-  bool _focused = false;
 
   Future<void> _pickDate() async {
-    setState(() {
-      _focused = true;
-    });
-
     DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _date,
@@ -25,10 +21,12 @@ class _DatePickerFieldState extends State<DatePickerField> {
       lastDate: DateTime(2100),
     );
 
-    if (picked != null) _date = picked;
-    setState(() {
-      _focused = false;
-    });
+    if (picked != null) {
+      setState(() {
+        _date = picked;
+      });
+      widget.onChanged(_date);
+    }
   }
 
   @override
@@ -40,25 +38,12 @@ class _DatePickerFieldState extends State<DatePickerField> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          border: Border.all(
-            color: _focused ? MyColor.aqua : MyColor.lightGrey,
-            width: _focused ? 2 : 1.5,
-          ),
+          color: MyColor.lightGrey,
           borderRadius: BorderRadius.circular(24),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.calendar_month_rounded,
-              color: MyColor.darkAqua,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              "${_date.year} / ${_date.month.toString().padLeft(2, '0')} / ${_date.day.toString().padLeft(2, '0')}",
-              style: MyTextStyle.darkAqua(14),
-            ),
-          ],
+        child: Text(
+          "${_date.year} / ${_date.month.toString().padLeft(2, '0')} / ${_date.day.toString().padLeft(2, '0')}",
+          style: MyTextStyle.darkAqua(14),
         ),
       ),
     );

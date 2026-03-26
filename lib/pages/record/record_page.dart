@@ -1,3 +1,4 @@
+import 'package:app_schedule/pages/record/record_filter_button.dart';
 import 'package:app_schedule/pages/record/record_filter_controller.dart';
 import 'package:app_schedule/pages/record/record_list_card.dart';
 import 'package:app_schedule/share/date_picker_field.dart';
@@ -9,7 +10,6 @@ import '../../my_text_style.dart';
 import '../home/home_page.dart';
 
 enum StatusFilter{
-  all,
   finished,
   unstart,
   ongoing,
@@ -53,6 +53,10 @@ class _RecordPageState extends State<RecordPage> {
           '紀錄',
           style: MyTextStyle.white(24, fontWeight: FontWeight.w700),
         ),
+        actions: [
+          const RecordFilterButton(),
+          const SizedBox(width: 16)
+        ],
       );
     }
 
@@ -63,10 +67,20 @@ class _RecordPageState extends State<RecordPage> {
           spacing: 16,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 12,
               children: [
-                const DatePickerField(),
-                statusDropDown()
+                DatePickerField(
+                  onChanged: (date) {
+                    filterController.setStartDate(date);
+                  }
+                ),
+                Text('~', style: MyTextStyle.darkAqua(20)),
+                DatePickerField(
+                  onChanged: (date) {
+                    filterController.setEndDate(date);
+                  }
+                ),
               ],
             ),
             ListView.separated(
@@ -87,58 +101,60 @@ class _RecordPageState extends State<RecordPage> {
   //-----mainView
 
   //-----subView
-    Widget statusDropDown() {
-      return Obx(() =>
-        Container(
-          width: 130,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          decoration: BoxDecoration(
-            color: const Color(0xFFEDEDED),
-            borderRadius: BorderRadius.circular(24)
-          ),
-          child: DropdownButtonFormField(
-              style: MyTextStyle.darkAqua(16, fontWeight: FontWeight.w600),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                contentPadding: EdgeInsets.zero,
-              ),
-              value: filterController.getStatus(),
-              items: [
-                buildDropDownItem(StatusFilter.all),
-                buildDropDownItem(StatusFilter.finished),
-                buildDropDownItem(StatusFilter.unstart),
-                buildDropDownItem(StatusFilter.ongoing),
-                buildDropDownItem(StatusFilter.overdue),
-              ],
-              onChanged: (val) {
-                if (val is StatusFilter) filterController.setStatus(val);
-              }
-          ),
-        )
-      );
-    }
-    DropdownMenuItem buildDropDownItem(StatusFilter statusFilter) {
-      String text = '';
-      switch (statusFilter) {
-        case StatusFilter.all: text = '全部'; break;
-        case StatusFilter.finished: text = '完成'; break;
-        case StatusFilter.unstart: text = '尚未開始'; break;
-        case StatusFilter.ongoing: text = '進行中'; break;
-        case StatusFilter.overdue: text = '逾期'; break;
-      }
 
-      return DropdownMenuItem(
-        value: statusFilter,
-        child: Center(
-          child: Text(
-            text,
-            style: MyTextStyle.darkAqua(16, fontWeight: FontWeight.w600),
-          ),
-        )
-      );
-    }
+
+  //   Widget statusDropDown() {
+  //     return Obx(() =>
+  //       Container(
+  //         width: 130,
+  //         padding: const EdgeInsets.symmetric(horizontal: 16),
+  //         decoration: BoxDecoration(
+  //           color: const Color(0xFFEDEDED),
+  //           borderRadius: BorderRadius.circular(24)
+  //         ),
+  //         child: DropdownButtonFormField(
+  //             style: MyTextStyle.darkAqua(16, fontWeight: FontWeight.w600),
+  //             decoration: const InputDecoration(
+  //               border: InputBorder.none,
+  //               enabledBorder: InputBorder.none,
+  //               focusedBorder: InputBorder.none,
+  //               contentPadding: EdgeInsets.zero,
+  //             ),
+  //             value: filterController.getStatus(),
+  //             items: [
+  //               buildDropDownItem(StatusFilter.all),
+  //               buildDropDownItem(StatusFilter.finished),
+  //               buildDropDownItem(StatusFilter.unstart),
+  //               buildDropDownItem(StatusFilter.ongoing),
+  //               buildDropDownItem(StatusFilter.overdue),
+  //             ],
+  //             onChanged: (val) {
+  //               if (val is StatusFilter) filterController.setStatus(val);
+  //             }
+  //         ),
+  //       )
+  //     );
+  //   }
+  //   DropdownMenuItem buildDropDownItem(StatusFilter statusFilter) {
+  //     String text = '';
+  //     switch (statusFilter) {
+  //       case StatusFilter.all: text = '全部'; break;
+  //       case StatusFilter.finished: text = '完成'; break;
+  //       case StatusFilter.unstart: text = '尚未開始'; break;
+  //       case StatusFilter.ongoing: text = '進行中'; break;
+  //       case StatusFilter.overdue: text = '逾期'; break;
+  //     }
+  //
+  //     return DropdownMenuItem(
+  //       value: statusFilter,
+  //       child: Center(
+  //         child: Text(
+  //           text,
+  //           style: MyTextStyle.darkAqua(16, fontWeight: FontWeight.w600),
+  //         ),
+  //       )
+  //     );
+  //   }
   //-----subView
 
   //-----function

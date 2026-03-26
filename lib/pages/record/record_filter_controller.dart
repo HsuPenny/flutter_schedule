@@ -3,27 +3,40 @@ import 'package:get/get.dart';
 
 ///紀錄篩選條件 日期區間、狀態(可複選)
 class FilterController extends GetxController {
-  Rx<DateTime> date = DateTime.now().obs;
-  Rx<StatusFilter> status = StatusFilter.all.obs;
+  Rx<DateTime> startDate = DateTime.now().obs;
+  Rx<DateTime> endDate = DateTime.now().obs;
+  RxList<StatusFilter> statusList = RxList<StatusFilter>();
 
   //日期
-  void setDate(DateTime date) {
-    this.date.value = date;
+  void setStartDate(DateTime date) {
+    startDate.value = date;
   }
-  DateTime getDate() {
-    return date.value;
+  DateTime getStartDate() {
+    return startDate.value;
+  }
+
+  void setEndDate(DateTime date) {
+    endDate.value = date;
+  }
+  DateTime getEndDate() {
+    return endDate.value;
   }
 
   //狀態
-  void setStatus(StatusFilter statusFilter) {
-    status.value = statusFilter;
+  void addOrRemoveStatus(StatusFilter statusFilter) {
+    if (statusList.contains(statusFilter)) {
+      statusList.remove(statusFilter);
+    } else {
+      statusList.add(statusFilter);
+    }
   }
-  StatusFilter getStatus() {
-    return status.value;
+  List<StatusFilter> getStatusList() {
+    return statusList;
   }
 
   void clearAll() {
-    date.value = DateTime.now();
-    status.value = StatusFilter.all;
+    startDate.value = DateTime.now();
+    endDate.value = DateTime.now();
+    statusList.clear();
   }
 }
