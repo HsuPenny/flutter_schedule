@@ -12,8 +12,6 @@ class DatePickerField extends StatefulWidget {
 }
 
 class _DatePickerFieldState extends State<DatePickerField> {
-  late DateTime _date = widget.initialDate;
-
   Future<void> _pickDate() async {
     DateTime? picked = await showDatePicker(
       context: context,
@@ -23,12 +21,11 @@ class _DatePickerFieldState extends State<DatePickerField> {
     );
 
     if (picked != null) {
-      setState(() {
-        _date = picked;
-      });
-      widget.onChanged(_date);
+      widget.onChanged(picked);
     }
   }
+
+  DateTime get date => widget.initialDate;
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +37,11 @@ class _DatePickerFieldState extends State<DatePickerField> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: MyColor.lightGrey,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Text(
-          "${_date.year} / ${_date.month.toString().padLeft(2, '0')} / ${_date.day.toString().padLeft(2, '0')}",
-          style: MyTextStyle.darkAqua(14),
+          "${date.year} / ${date.month.toString().padLeft(2, '0')} / ${date.day.toString().padLeft(2, '0')}",
+          style: MyTextStyle.darkAqua(16),
         ),
       ),
     );

@@ -24,16 +24,11 @@ class RecordPage extends StatefulWidget {
 }
 
 class _RecordPageState extends State<RecordPage> {
-  //-----view data
-    final filterController = Get.find<FilterController>();
-  //-----view data
+  final filterController = Get.find<FilterController>();
+  final List<QuickRange> rangeList = [QuickRange.today, QuickRange.yesterday, QuickRange.thisWeek, QuickRange.thisMonth];
 
-  //-----sys data
-  //-----sys data
-
-  //-----localize
-  //   StatusFilter _status = StatusFilter.all;
-  //-----localize
+  double get screenWidth => MediaQuery.of(context).size.width;
+  double get screenHeight => MediaQuery.of(context).size.height;
 
   @override
   Widget build(BuildContext context) {
@@ -43,129 +38,89 @@ class _RecordPageState extends State<RecordPage> {
     );
   }
 
-  //-----mainView
-    PreferredSizeWidget get appBar {
-      return AppBar(
-        toolbarHeight: screenHeight * 0.08,
-        backgroundColor: MyColor.aqua,
-        automaticallyImplyLeading: false, //不加返回鍵
-        title: Text(
-          '紀錄',
-          style: MyTextStyle.white(24, fontWeight: FontWeight.w700),
-        ),
-        actions: const [
-          RecordFilterButton(),
-          SizedBox(width: 16)
+  PreferredSizeWidget get appBar {
+    return AppBar(
+      toolbarHeight: screenHeight * 0.08,
+      backgroundColor: MyColor.aqua,
+      automaticallyImplyLeading: false, //不加返回鍵
+      title: Text(
+        '紀錄',
+        style: MyTextStyle.white(24, fontWeight: FontWeight.w700),
+      ),
+      actions: const [
+        RecordFilterButton(),
+        SizedBox(width: 16)
+      ],
+    );
+  }
+
+  Widget get body {
+    return Obx(() => Container(
+      padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 24),
+      child: Column(
+        spacing: 16,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 12,
+            children: [
+              DatePickerField(
+                initialDate: filterController.getStartDate(),
+                onChanged: (date) {
+                  filterController.setStartDate(date);
+                }
+              ),
+              Text('~', style: MyTextStyle.darkAqua(20)),
+              DatePickerField(
+                initialDate: filterController.getEndDate(),
+                onChanged: (date) {
+                  filterController.setEndDate(date);
+                }
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 16,
+            children: List.generate(rangeList.length, (index) {
+              return buildRangeChip(rangeList[index], onTap: () {
+                filterController.setQuickRange(rangeList[index]);
+              });
+            }),
+          ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: recordList.length,
+            itemBuilder: (context, index) {
+              return RecordListCard(item: recordList[index]);
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 12);
+            },
+          )
         ],
-      );
-    }
+      ),
+    ));
+  }
 
-    Widget get body {
-      return Container(
-        padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 24),
-        child: Column(
-          spacing: 16,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              spacing: 12,
-              children: [
-                DatePickerField(
-                  initialDate: filterController.getStartDate(),
-                  onChanged: (date) {
-                    filterController.setStartDate(date);
-                  }
-                ),
-                Text('~', style: MyTextStyle.darkAqua(20)),
-                DatePickerField(
-                  initialDate: filterController.getEndDate(),
-                  onChanged: (date) {
-                    filterController.setEndDate(date);
-                  }
-                ),
-              ],
-            ),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: recordList.length,
-              itemBuilder: (context, index) {
-                return RecordListCard(item: recordList[index]);
-              },
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 12);
-              },
-            )
-          ],
+  Widget buildRangeChip(QuickRange quickRange, {required Function() onTap}) {
+    final selected = filterController.getQuickRange() == quickRange;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        decoration: BoxDecoration(
+          color: selected ? MyColor.darkAqua : MyColor.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: selected ? Colors.transparent : MyColor.darkAqua)
         ),
-      );
-    }
-  //-----mainView
-
-  //-----subView
-
-
-  //   Widget statusDropDown() {
-  //     return Obx(() =>
-  //       Container(
-  //         width: 130,
-  //         padding: const EdgeInsets.symmetric(horizontal: 16),
-  //         decoration: BoxDecoration(
-  //           color: const Color(0xFFEDEDED),
-  //           borderRadius: BorderRadius.circular(24)
-  //         ),
-  //         child: DropdownButtonFormField(
-  //             style: MyTextStyle.darkAqua(16, fontWeight: FontWeight.w600),
-  //             decoration: const InputDecoration(
-  //               border: InputBorder.none,
-  //               enabledBorder: InputBorder.none,
-  //               focusedBorder: InputBorder.none,
-  //               contentPadding: EdgeInsets.zero,
-  //             ),
-  //             value: filterController.getStatus(),
-  //             items: [
-  //               buildDropDownItem(StatusFilter.all),
-  //               buildDropDownItem(StatusFilter.finished),
-  //               buildDropDownItem(StatusFilter.unstart),
-  //               buildDropDownItem(StatusFilter.ongoing),
-  //               buildDropDownItem(StatusFilter.overdue),
-  //             ],
-  //             onChanged: (val) {
-  //               if (val is StatusFilter) filterController.setStatus(val);
-  //             }
-  //         ),
-  //       )
-  //     );
-  //   }
-  //   DropdownMenuItem buildDropDownItem(StatusFilter statusFilter) {
-  //     String text = '';
-  //     switch (statusFilter) {
-  //       case StatusFilter.all: text = '全部'; break;
-  //       case StatusFilter.finished: text = '完成'; break;
-  //       case StatusFilter.unstart: text = '尚未開始'; break;
-  //       case StatusFilter.ongoing: text = '進行中'; break;
-  //       case StatusFilter.overdue: text = '逾期'; break;
-  //     }
-  //
-  //     return DropdownMenuItem(
-  //       value: statusFilter,
-  //       child: Center(
-  //         child: Text(
-  //           text,
-  //           style: MyTextStyle.darkAqua(16, fontWeight: FontWeight.w600),
-  //         ),
-  //       )
-  //     );
-  //   }
-  //-----subView
-
-  //-----function
-    double get screenWidth {
-      return MediaQuery.of(context).size.width;
-    }
-
-    double get screenHeight {
-      return MediaQuery.of(context).size.height;
-    }
-  //-----function
+        child: Text(
+          filterController.getQuickRangeName(quickRange),
+          style: selected ? MyTextStyle.white(12) : MyTextStyle.darkAqua(12),
+        ),
+      )
+    );
+  }
 }
