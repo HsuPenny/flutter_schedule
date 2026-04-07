@@ -4,6 +4,9 @@ import 'package:app_schedule/pages/home/home_page.dart';
 import 'package:app_schedule/pages/record/record_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+
+import 'add_record/add_record_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -48,7 +51,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
       bottomNavigationBar: footer,
       floatingActionButton: CircularFab(
         onPressed: () {
-          //TODO: 新增頁面
+          Get.to(() => const AddRecordPage());
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
