@@ -1,12 +1,12 @@
+import 'package:app_schedule/pages/add_record/add_record_date_picker.dart';
+import 'package:app_schedule/pages/add_record/add_record_time_picker.dart';
 import 'package:app_schedule/share/my_filled_button.dart';
 import 'package:app_schedule/share/my_text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../my_color.dart';
 import '../../my_text_style.dart';
-import '../../share/date_picker_field.dart';
 import '../../share/my_outline_button.dart';
 
 class AddRecordPage extends StatefulWidget {
@@ -51,13 +51,34 @@ class _AddRecordPageState extends State<AddRecordPage> {
             child: Container(
               padding: const EdgeInsets.all(40),
               child: Column(
-                spacing: 12,
+                spacing: 16,
                 children: [
                   MyTextField(
                     controller: titleController,
                     hintText: '請輸入行程名稱',
                     icon: const Icon(Icons.edit),
                   ),
+
+                  Row(
+                    spacing: 12,
+                    children: [
+                      Expanded(
+                          child: AddRecordDatePicker(
+                              initialDate: DateTime.now(),
+                              onChanged: (date) {
+
+                              }
+                          )
+                      ),
+                      AddRecordTimePicker(
+                          initialTime: TimeOfDay.now(),
+                          onChanged: (time) {
+
+                          }
+                      )
+                    ],
+                  )
+
                 ]
               )
             )

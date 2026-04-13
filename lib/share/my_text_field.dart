@@ -18,28 +18,33 @@ class MyTextField extends StatefulWidget {
 class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: widget.controller,
-      cursorColor: MyColor.darkAqua,
-      style: MyTextStyle.darkAqua(14),
-      keyboardType: widget.keyboardType ?? TextInputType.text,
-      decoration: InputDecoration(
-        icon: widget.icon,
-        iconColor: MyColor.aqua,
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: MyColor.aqua, width: 2)
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: MyColor.darkGrey, width: 2)
-        ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-        hintText: widget.hintText ?? '',
-        hintStyle: MyTextStyle.darkGrey(14),
-      )
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      decoration: BoxDecoration(
+          color: MyColor.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: MyColor.darkAqua, width: 1.5)
+      ),
+      child: Row(
+        spacing: 8,
+        children: [
+          Icon(widget.icon?.icon, color: MyColor.aqua, size: 24),
+          Expanded(
+              child: TextField(
+                  controller: widget.controller,
+                  cursorColor: MyColor.darkAqua,
+                  style: MyTextStyle.darkAqua(16),
+                  keyboardType: widget.keyboardType ?? TextInputType.text,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    border: InputBorder.none,
+                    hintText: widget.hintText ?? '',
+                    hintStyle: MyTextStyle.darkGrey(14),
+                  )
+              )
+          )
+        ],
+      ),
     );
   }
 }
