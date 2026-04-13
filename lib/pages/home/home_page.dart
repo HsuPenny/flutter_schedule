@@ -4,7 +4,7 @@ import 'package:app_schedule/pages/home/home_statistics_card.dart';
 import 'package:app_schedule/pages/home/home_today_card.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/schedule_item.dart';
+import '../../model/schedule_data.dart';
 import '../../my_color.dart';
 
 class HomePage extends StatefulWidget {
@@ -57,13 +57,13 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-List<ScheduleItem> list = [
-  ScheduleItem.init(name: '拜訪客戶A', status: 2, time: '10:00'),
-  ScheduleItem.init(name: '會議', status: 0, time: '14:30'),
-  ScheduleItem.init(name: '視察工地B', status: 1, time: '18:00'),
+List<ScheduleData> list = [
+  ScheduleData.init(name: '拜訪客戶A', status: 2, time: '10:00'),
+  ScheduleData.init(name: '會議', status: 0, time: '14:30'),
+  ScheduleData.init(name: '視察工地B', status: 1, time: '18:00'),
 ];
-List<ScheduleItem> recordList = [
-  ScheduleItem.init(name: '拜訪客戶A', status: 3, time: '2025/08/20 14:30'),
-  ScheduleItem.init(name: '會議', status: 0, time: '2025/08/19 10:00'),
-  ScheduleItem.init(name: '視察工地B', status: 2, time: '2025/08/18 18:00'),
+List<ScheduleData> recordList = [
+  ScheduleData.init(name: '拜訪客戶A', status: 3, time: '2025/08/20 14:30'),
+  ScheduleData.init(name: '會議', status: 0, time: '2025/08/19 10:00'),
+  ScheduleData.init(name: '視察工地B', status: 2, time: '2025/08/18 18:00'),
 ];

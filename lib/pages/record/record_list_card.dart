@@ -1,11 +1,11 @@
 import 'package:app_schedule/share/record_list_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/schedule_item.dart';
+import '../../model/schedule_data.dart';
 import '../../my_color.dart';
 
 class RecordListCard extends StatelessWidget {
-  ScheduleItem item;
+  ScheduleData item;
   RecordListCard({super.key, required this.item});
 
   @override

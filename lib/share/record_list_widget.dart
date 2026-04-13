@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../model/schedule_item.dart';
+import '../model/schedule_data.dart';
 import '../my_color.dart';
 import '../my_text_style.dart';
 import 'status_tag.dart';
 
 class RecordListWidget extends StatelessWidget {
-  final ScheduleItem item;
+  final ScheduleData item;
   const RecordListWidget({super.key, required this.item});
 
   @override

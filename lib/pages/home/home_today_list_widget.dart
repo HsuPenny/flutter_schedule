@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/schedule_item.dart';
+import '../../model/schedule_data.dart';
 import '../../my_color.dart';
 import '../../my_text_style.dart';
 import '../../share/status_tag.dart';
 
 class HomeTodayListWidget extends StatelessWidget {
-  final ScheduleItem item;
+  final ScheduleData item;
   const HomeTodayListWidget({super.key, required this.item});
 
   Color get color {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../model/schedule_item.dart';
+import '../../model/schedule_data.dart';
 import '../../my_color.dart';
 import '../../my_text_style.dart';
 
 class RecordDetailPage extends StatefulWidget {
-  final ScheduleItem item;
+  final ScheduleData item;
   const RecordDetailPage({super.key, required this.item});
 
   @override
@@ -22,7 +22,7 @@ class _RecordDetailPageState extends State<RecordDetailPage> {
   //-----view data
 
   //-----sys data
-    ScheduleItem get item => widget.item;
+    ScheduleData get item => widget.item;
   //-----sys data
 
   //-----localize

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../model/schedule_item.dart';
+import '../model/schedule_data.dart';
 import '../my_color.dart';
 
 class StatusTag extends StatelessWidget {
-  ScheduleItem item;
+  ScheduleData item;
   StatusTag({super.key, required this.item});
 
   @override
