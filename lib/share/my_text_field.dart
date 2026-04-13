@@ -4,18 +4,14 @@ import 'package:flutter/material.dart';
 
 import '../my_text_style.dart';
 
-class MyTextField extends StatefulWidget {
+class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final String? hintText;
   final Icon? icon;
   final TextInputType? keyboardType;
-  const MyTextField({super.key, required this.controller, this.hintText, this.icon, this.keyboardType});
+  final int maxLines;
+  const MyTextField({super.key, required this.controller, this.hintText, this.icon, this.keyboardType, this.maxLines = 1});
 
-  @override
-  State<StatefulWidget> createState() => _MyTextFieldState();
-}
-
-class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,18 +24,19 @@ class _MyTextFieldState extends State<MyTextField> {
       child: Row(
         spacing: 8,
         children: [
-          Icon(widget.icon?.icon, color: MyColor.aqua, size: 24),
+          if (icon != null) Icon(icon?.icon, color: MyColor.aqua, size: 24),
           Expanded(
               child: TextField(
-                  controller: widget.controller,
+                  controller: controller,
                   cursorColor: MyColor.darkAqua,
                   style: MyTextStyle.darkAqua(16),
-                  keyboardType: widget.keyboardType ?? TextInputType.text,
+                  keyboardType: keyboardType ?? TextInputType.text,
+                  maxLines: maxLines,
                   decoration: InputDecoration(
                     isDense: true,
                     border: InputBorder.none,
-                    hintText: widget.hintText ?? '',
-                    hintStyle: MyTextStyle.darkGrey(14),
+                    hintText: hintText ?? '',
+                    hintStyle: MyTextStyle.darkGrey(16),
                   )
               )
           )

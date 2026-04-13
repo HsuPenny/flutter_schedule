@@ -1,5 +1,4 @@
 import 'package:app_schedule/pages/add_record/add_record_date_picker.dart';
-import 'package:app_schedule/pages/add_record/add_record_location_picker.dart';
 import 'package:app_schedule/pages/add_record/add_record_time_picker.dart';
 import 'package:app_schedule/share/my_filled_button.dart';
 import 'package:app_schedule/share/my_text_field.dart';
@@ -38,7 +37,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
       backgroundColor: MyColor.aqua,
       centerTitle: true,
       title: Text(
-        '新增行程',
+        '新增行程（1/2）',
         style: MyTextStyle.white(24, fontWeight: FontWeight.w700),
       ),
     );
@@ -52,7 +51,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
             child: Container(
               padding: const EdgeInsets.all(40),
               child: Column(
-                spacing: 16,
+                spacing: 24,
                 children: [
                   MyTextField(
                     controller: titleController,
@@ -61,7 +60,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
                   ),
 
                   Row(
-                    spacing: 12,
+                    spacing: 16,
                     children: [
                       Expanded(
                           child: AddRecordDatePicker(
@@ -80,9 +79,11 @@ class _AddRecordPageState extends State<AddRecordPage> {
                     ],
                   ),
 
-                  AddRecordLocationPicker(onChanged: () {
-
-                  })
+                  MyTextField(
+                    controller: titleController,
+                    hintText: '請輸入備註',
+                    maxLines: 3,
+                  ),
                 ]
               )
             )
@@ -121,12 +122,12 @@ class _AddRecordPageState extends State<AddRecordPage> {
             ),
             Expanded(
                 child: MyFilledButton(
-                    text: '確認新增',
+                    text: '下一步',
                     style: MyTextStyle.white(16),
                     color: MyColor.darkAqua,
                     radius: 30,
                     onPressed: () {
-                      //TODO: 新增
+                      //TODO: 新增地點
                     }
                 )
             )
