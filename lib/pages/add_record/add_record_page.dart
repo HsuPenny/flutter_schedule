@@ -1,4 +1,5 @@
 import 'package:app_schedule/pages/add_record/add_record_date_picker.dart';
+import 'package:app_schedule/pages/add_record/add_record_location_picker.dart';
 import 'package:app_schedule/pages/add_record/add_record_time_picker.dart';
 import 'package:app_schedule/share/my_filled_button.dart';
 import 'package:app_schedule/share/my_text_field.dart';
@@ -77,8 +78,11 @@ class _AddRecordPageState extends State<AddRecordPage> {
                           }
                       )
                     ],
-                  )
+                  ),
 
+                  AddRecordLocationPicker(onChanged: () {
+
+                  })
                 ]
               )
             )
