@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import 'add_record/add_record_page.dart';
+import 'add_record/add_record_step_1_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -51,7 +51,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
       bottomNavigationBar: footer,
       floatingActionButton: CircularFab(
         onPressed: () {
-          Get.to(() => const AddRecordPage());
+          Get.to(() => const AddRecordStep1Page());
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
