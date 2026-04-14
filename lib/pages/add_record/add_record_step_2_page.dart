@@ -1,6 +1,8 @@
+import 'package:app_schedule/model/location_data.dart';
 import 'package:app_schedule/pages/add_record/location_add_label.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../my_color.dart';
 import '../../my_text_style.dart';
@@ -15,6 +17,7 @@ class AddRecordStep2Page extends StatefulWidget {
 }
 
 class _AddRecordStep2PageState extends State<AddRecordStep2Page> {
+  List<LocationData> locationList = [];
 
   double get screenWidth => MediaQuery.of(context).size.width;
   double get screenHeight => MediaQuery.of(context).size.height;
@@ -44,14 +47,32 @@ class _AddRecordStep2PageState extends State<AddRecordStep2Page> {
     return Column(
       children: [
         Expanded(
-            child: SingleChildScrollView(
-                child: Container(
-                    padding: const EdgeInsets.all(40),
-                    child: Column(
-                        children: [
-                          LocationAddLabel(),
-                        ]
-                    )
+            child: Container(
+                padding: const EdgeInsets.all(40),
+                child: Column(
+                    children: [
+                      const LocationAddLabel(),
+                      const SizedBox(height: 20),
+                      Expanded(
+                          child: ListView.separated(
+                            itemBuilder: (context, index) {
+                              return _LocationItem(locationData: locationList[index]);
+                            },
+                            separatorBuilder: (context, index) {
+                              return Container(
+                                alignment: Alignment.centerLeft,
+                                padding: const EdgeInsets.all(4),
+                                child: SvgPicture.asset(
+                                    width: 24,
+                                    color: MyColor.darkGrey,
+                                    'assets/svgs/vertical_dots.svg'
+                                ),
+                              );
+                            },
+                            itemCount: locationList.length,
+                          )
+                      )
+                    ]
                 )
             )
         ),
@@ -104,15 +125,32 @@ class _AddRecordStep2PageState extends State<AddRecordStep2Page> {
 }
 
 class _LocationItem extends StatelessWidget {
+  final LocationData locationData;
+
+  const _LocationItem({required this.locationData});
+
   @override
   Widget build(BuildContext context) {
     return Row(
+      spacing: 8,
       children: [
-        const Icon(Icons.location_pin, color: MyColor.red, size: 24),
-        const SizedBox(width: 12),
-        Container(
-
+        const Icon(Icons.location_pin, color: MyColor.red, size: 32),
+        Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: MyColor.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text(locationData.location, style: MyTextStyle.darkGrey(16, fontWeight: FontWeight.bold)),
+            )
         ),
+        GestureDetector(
+          onTap: () {
+
+          },
+          child: const Icon(Icons.close, color: MyColor.darkGrey, size: 32),
+        )
       ],
     );
   }
