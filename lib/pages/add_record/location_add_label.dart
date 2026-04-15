@@ -1,6 +1,9 @@
 import 'package:app_schedule/my_color.dart';
 import 'package:app_schedule/my_text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../map_page.dart';
 
 class LocationAddLabel extends StatefulWidget {
   const LocationAddLabel({super.key});
@@ -16,7 +19,7 @@ class _LocationAddLabelState extends State<LocationAddLabel> {
     return InkWell(
       borderRadius: BorderRadius.circular(24),
       onTap: () {
-
+        Get.to(const MapPage());
       },
       child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

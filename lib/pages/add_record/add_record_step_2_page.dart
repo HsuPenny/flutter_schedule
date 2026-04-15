@@ -1,5 +1,6 @@
 import 'package:app_schedule/model/location_data.dart';
 import 'package:app_schedule/pages/add_record/location_add_label.dart';
+import 'package:app_schedule/pages/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';

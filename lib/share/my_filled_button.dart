@@ -6,14 +6,24 @@ class MyFilledButton extends StatelessWidget {
   final Color color;
   final double radius;
   final VoidCallback onPressed;
-  const MyFilledButton({super.key, required this.text, required this.style, required this.color, required this.onPressed, this.radius = 12});
+  final BorderSide? borderSide;
+
+  const MyFilledButton({
+    super.key,
+    required this.text,
+    required this.style,
+    required this.color,
+    required this.onPressed,
+    this.radius = 12,
+    this.borderSide
+  });
 
   @override
   Widget build(BuildContext context) {
     return FilledButton(
       style: FilledButton.styleFrom(
         backgroundColor: color,
-        side: BorderSide.none,
+        side: borderSide ?? BorderSide.none,
         elevation: 3,
         shadowColor: Colors.black54,
         shape: RoundedRectangleBorder(
