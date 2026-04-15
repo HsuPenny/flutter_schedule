@@ -2,6 +2,7 @@ import 'package:app_schedule/my_color.dart';
 import 'package:app_schedule/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../map_page.dart';
 
@@ -19,7 +20,13 @@ class _LocationAddLabelState extends State<LocationAddLabel> {
     return InkWell(
       borderRadius: BorderRadius.circular(24),
       onTap: () {
-        Get.to(const MapPage());
+        Get.to(
+            MapPage(
+              onTap: (LatLng position) {
+
+              }
+            )
+        );
       },
       child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
