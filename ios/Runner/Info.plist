@@ -41,10 +41,16 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>需要您的位置來提供附近服務</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>需要持續取得位置以提供完整功能</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>io.flutter.embedded_views_preview</key>
+    <true/>
 	<key>GMSApiKey</key>
     <string>AIzaSyBAy9-lszq8vrNnUzCZPdVjNBcy7IdkSeY</string>
 </dict>
