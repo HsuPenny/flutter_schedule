@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../controllers/location_controller.dart';
 import '../../my_color.dart';
 import '../../my_text_style.dart';
 import '../../share/my_filled_button.dart';
@@ -18,7 +19,7 @@ class AddRecordStep2Page extends StatefulWidget {
 }
 
 class _AddRecordStep2PageState extends State<AddRecordStep2Page> {
-  List<LocationData> locationList = [];
+  final locationController = Get.find<LocationController>();
 
   double get screenWidth => MediaQuery.of(context).size.width;
   double get screenHeight => MediaQuery.of(context).size.height;
@@ -57,7 +58,8 @@ class _AddRecordStep2PageState extends State<AddRecordStep2Page> {
                       Expanded(
                           child: ListView.separated(
                             itemBuilder: (context, index) {
-                              return _LocationItem(locationData: locationList[index]);
+                              final data = locationController.getLocation(index);
+                              return data == null ? Container() : _LocationItem(locationData: data);
                             },
                             separatorBuilder: (context, index) {
                               return Container(
@@ -70,7 +72,7 @@ class _AddRecordStep2PageState extends State<AddRecordStep2Page> {
                                 ),
                               );
                             },
-                            itemCount: locationList.length,
+                            itemCount: locationController.locationList.length,
                           )
                       )
                     ]

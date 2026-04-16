@@ -1,3 +1,4 @@
+import 'package:app_schedule/model/location_data.dart';
 import 'package:app_schedule/share/my_filled_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -6,7 +7,7 @@ import '../my_color.dart';
 import '../my_text_style.dart';
 
 class MapPage extends StatefulWidget {
-  final Function(LatLng position) onTap;
+  final Function(LocationData data) onTap;
   const MapPage({super.key, required this.onTap});
 
   @override
@@ -45,10 +46,11 @@ class _MapPageState extends State<MapPage> {
       fit: StackFit.expand,
       children: [
         GoogleMap(
-            initialCameraPosition: const CameraPosition(
-              target: LatLng(25.033964, 121.564468),
-              zoom: 16,
-            )
+          zoomControlsEnabled: false,
+          initialCameraPosition: const CameraPosition(
+            target: LatLng(25.033964, 121.564468),
+            zoom: 16,
+          ),
         ),
         Positioned(
           top: 0,

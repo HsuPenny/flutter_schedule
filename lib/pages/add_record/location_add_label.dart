@@ -2,8 +2,8 @@ import 'package:app_schedule/my_color.dart';
 import 'package:app_schedule/my_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../controllers/location_controller.dart';
 import '../map_page.dart';
 
 class LocationAddLabel extends StatefulWidget {
@@ -14,6 +14,7 @@ class LocationAddLabel extends StatefulWidget {
 }
 
 class _LocationAddLabelState extends State<LocationAddLabel> {
+  final locationController = Get.find<LocationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,8 @@ class _LocationAddLabelState extends State<LocationAddLabel> {
       onTap: () {
         Get.to(
             MapPage(
-              onTap: (LatLng position) {
-
+              onTap: (data) {
+                locationController.addLocation(data);
               }
             )
         );
