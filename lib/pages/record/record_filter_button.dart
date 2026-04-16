@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:app_schedule/pages/record/record_filter_controller.dart';
+import 'package:app_schedule/controllers/record_filter_controller.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../my_color.dart';
