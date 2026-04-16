@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../core/ac_widget.dart';
+import 'map/map_service.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -69,7 +70,8 @@ class _LoadingPageState extends State<LoadingPage> {
     }
 
     void onInit() {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+        await MapService.requestLocationPermission();
         Future.delayed(const Duration(seconds: 2));
         Get.to(const MainPage());
       });

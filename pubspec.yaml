@@ -52,7 +52,11 @@ dev_dependencies:
   flutter_svg: ^2.0.10+1
   fl_chart: ^0.69.2
   intl: ^0.20.2
-  google_maps_flutter: ^2.3.0
+  google_maps_flutter: ^2.14.0
+  geolocator: ^14.0.1
+  url_launcher: ^6.3.1
+  fluttertoast: ^9.0.0
+  permission_handler: ^11.3.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

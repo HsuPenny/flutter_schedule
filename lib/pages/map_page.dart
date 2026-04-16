@@ -1,4 +1,5 @@
 import 'package:app_schedule/model/location_data.dart';
+import 'package:app_schedule/pages/map/map_manager.dart';
 import 'package:app_schedule/share/my_filled_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,9 +17,18 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   final searchController = TextEditingController();
+  final mapManager = MapManager();
 
   double get screenWidth => MediaQuery.of(context).size.width;
   double get screenHeight => MediaQuery.of(context).size.height;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await mapManager.fetchPosition();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +57,9 @@ class _MapPageState extends State<MapPage> {
       children: [
         GoogleMap(
           zoomControlsEnabled: false,
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(25.033964, 121.564468),
-            zoom: 16,
+          initialCameraPosition: CameraPosition(
+            target: mapManager.userPosition,
+            zoom: mapManager.defaultZoom,
           ),
         ),
         Positioned(
@@ -75,7 +85,7 @@ class _MapPageState extends State<MapPage> {
 
               }
           )
-        )
+        ),
       ],
     );
   }
