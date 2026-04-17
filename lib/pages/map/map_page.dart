@@ -1,8 +1,11 @@
 import 'package:app_schedule/model/location_data.dart';
+import 'package:app_schedule/pages/map/map_location_list_view.dart';
 import 'package:app_schedule/pages/map/map_manager.dart';
+import 'package:app_schedule/share/custom_toast.dart';
 import 'package:app_schedule/share/my_filled_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:get/get.dart';
 
 import '../../my_color.dart';
 import '../../my_text_style.dart';
@@ -82,7 +85,33 @@ class _MapPageState extends State<MapPage> {
           right: 0,
           child: _SearchBar(
             onSearch: (List<PlaceSuggestion> list) {
+              if (list.isEmpty) {
+                showToast(message: "沒有相關地點");
+                return;
+              }
 
+              Get.bottomSheet(
+                backgroundColor: MyColor.white,
+                isScrollControlled: true,
+                SizedBox(
+                  height: screenHeight * 0.6,
+                  child: MapLocationListView(
+                    places: list,
+                    onSelect: (place) async {
+                      PlaceDetail placeDetail = await mapManager.getPlaceDetail(place.placeId);
+                      _mapController?.animateCamera(
+                        CameraUpdate.newCameraPosition(
+                          CameraPosition(
+                            target: LatLng(placeDetail.lat, placeDetail.lng),
+                            zoom: mapManager.defaultZoom
+                          )
+                        )
+                      );
+                      Get.back();
+                    }
+                  ),
+                ),
+              );
             }
           ),
         ),
@@ -119,6 +148,7 @@ class _SearchBar extends StatelessWidget {
   Future search(String keyword) async {
     List<PlaceSuggestion> list = await mapManager.searchPlace(keyword);
     onSearch(list);
+    searchController.clear();
   }
 
   @override

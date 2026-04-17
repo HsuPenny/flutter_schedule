@@ -60,8 +60,13 @@ class MapManager {
       }),
     );
 
-    final data = jsonDecode(response.body);
-    final list = (data as List)
+    final data = jsonDecode(response.body) as Map<String, dynamic>;
+    final suggestionsRaw = data['suggestions'];
+    if (suggestionsRaw == null) {
+      return [];
+    }
+
+    final list = (suggestionsRaw as List)
         .map((e) => PlaceSuggestion.fromJson(e))
         .toList();
     return list;

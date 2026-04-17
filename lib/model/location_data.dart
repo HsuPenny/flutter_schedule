@@ -30,25 +30,19 @@ class PlaceSuggestion {
 }
 
 class PlaceDetail {
-  final String placeId;
   final String name;
-  final String address;
   final double lat;
   final double lng;
 
   PlaceDetail({
-    required this.placeId,
     required this.name,
-    required this.address,
     required this.lat,
     required this.lng,
   });
 
   factory PlaceDetail.fromJson(Map<String, dynamic> json) {
     return PlaceDetail(
-      placeId: json['id'],
       name: json['displayName']['text'],
-      address: json['formattedAddress'],
       lat: json['location']['latitude'],
       lng: json['location']['longitude'],
     );
