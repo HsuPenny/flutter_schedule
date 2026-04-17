@@ -49,6 +49,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
   get: ^4.7.2
+  http: ^1.2.0
   flutter_svg: ^2.0.10+1
   fl_chart: ^0.69.2
   intl: ^0.20.2
