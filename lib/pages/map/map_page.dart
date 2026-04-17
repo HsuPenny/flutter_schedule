@@ -4,8 +4,8 @@ import 'package:app_schedule/share/my_filled_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../my_color.dart';
-import '../my_text_style.dart';
+import '../../my_color.dart';
+import '../../my_text_style.dart';
 
 class MapPage extends StatefulWidget {
   final Function(LocationData data) onTap;
@@ -16,8 +16,10 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  final searchController = TextEditingController();
   final mapManager = MapManager();
+  final Set<Marker> _markers = {};
+  GoogleMapController? _mapController;
+  LocationData? data;
 
   double get screenWidth => MediaQuery.of(context).size.width;
   double get screenHeight => MediaQuery.of(context).size.height;
@@ -58,15 +60,31 @@ class _MapPageState extends State<MapPage> {
         GoogleMap(
           zoomControlsEnabled: false,
           initialCameraPosition: CameraPosition(
-            target: mapManager.userPosition,
+            target: mapManager.latLng,
             zoom: mapManager.defaultZoom,
           ),
+          markers: _markers,
+          onMapCreated: (controller) {
+            _mapController = controller;
+          },
+          onTap: (latLng) {
+            mapManager.latLng = latLng;
+            _mapController?.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(target: latLng, zoom: mapManager.defaultZoom),
+              ),
+            );
+          },
         ),
         Positioned(
           top: 0,
           left: 0,
           right: 0,
-          child: _SearchBar(searchController: searchController),
+          child: _SearchBar(
+            onSearch: (List<PlaceSuggestion> list) {
+
+            }
+          ),
         ),
         Positioned(
           bottom: 20,
@@ -92,8 +110,16 @@ class _MapPageState extends State<MapPage> {
 }
 
 class _SearchBar extends StatelessWidget {
-  final TextEditingController searchController;
-  const _SearchBar({required this.searchController});
+  final searchController = TextEditingController();
+  final mapManager = MapManager();
+
+  final Function(List<PlaceSuggestion>) onSearch;
+  _SearchBar({required this.onSearch});
+
+  Future search(String keyword) async {
+    List<PlaceSuggestion> list = await mapManager.searchPlace(keyword);
+    onSearch(list);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,10 +140,18 @@ class _SearchBar extends StatelessWidget {
                   decoration: InputDecoration(
                     hint: Text('請搜尋地點', style: MyTextStyle.darkGrey(16)),
                     border: InputBorder.none,
-                  )
+                  ),
+                  onSubmitted: (text) async {
+                    await search(text);
+                  },
               )
             ),
-            const Icon(Icons.search, color: MyColor.darkGrey, size: 24)
+            GestureDetector(
+              onTap: () async {
+                await search(searchController.text);
+              },
+              child: const Icon(Icons.search, color: MyColor.darkGrey, size: 24),
+            )
           ],
         )
       ),

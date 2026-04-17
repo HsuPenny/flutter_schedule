@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/location_controller.dart';
-import '../map_page.dart';
+import '../map/map_page.dart';
 
 class LocationAddLabel extends StatefulWidget {
   const LocationAddLabel({super.key});
