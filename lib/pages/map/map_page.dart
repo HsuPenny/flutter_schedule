@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/location_controller.dart';
 import '../../my_color.dart';
 import '../../my_text_style.dart';
 
@@ -19,10 +20,9 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  final locationController = Get.find<LocationController>();
   final mapManager = MapManager();
-  final Set<Marker> _markers = {};
-  GoogleMapController? _mapController;
-  LocationData? data;
+  PlaceDetail? placeDetail;
 
   double get screenWidth => MediaQuery.of(context).size.width;
   double get screenHeight => MediaQuery.of(context).size.height;
@@ -66,17 +66,10 @@ class _MapPageState extends State<MapPage> {
             target: mapManager.latLng,
             zoom: mapManager.defaultZoom,
           ),
-          markers: _markers,
-          onMapCreated: (controller) {
-            _mapController = controller;
-          },
+          markers: mapManager.markers,
+          onMapCreated: (controller) => mapManager.controller = controller,
           onTap: (latLng) {
-            mapManager.latLng = latLng;
-            _mapController?.animateCamera(
-              CameraUpdate.newCameraPosition(
-                CameraPosition(target: latLng, zoom: mapManager.defaultZoom),
-              ),
-            );
+            mapManager.moveCameraTo(latLng);
           },
         ),
         Positioned(
@@ -98,9 +91,18 @@ class _MapPageState extends State<MapPage> {
                   child: MapLocationListView(
                     places: list,
                     onSelect: (place) async {
-                      PlaceDetail placeDetail = await mapManager.getPlaceDetail(place.placeId);
-                      showPlaceOnMap(placeDetail);
+                      placeDetail = await mapManager.getPlaceDetail(place.placeId);
                       Get.back();
+
+                      if (placeDetail == null) {
+                        showToast(message: "無法取得地點資訊");
+                        return;
+                      }
+                      mapManager.moveCameraTo(
+                        LatLng(placeDetail!.lat, placeDetail!.lng),
+                        placeName: placeDetail!.name,
+                      );
+                      setState(() {});
                     }
                   ),
                 ),
@@ -122,32 +124,18 @@ class _MapPageState extends State<MapPage> {
                   width: 2
               ),
               onPressed: () {
-
+                locationController.addLocation(
+                  LocationData(
+                    location: placeDetail?.name ?? '',
+                    latLng: mapManager.latLng
+                  )
+                );
+                Get.back();
               }
           )
         ),
       ],
     );
-  }
-
-  void showPlaceOnMap(PlaceDetail placeDetail) {
-    final position = LatLng(placeDetail.lat, placeDetail.lng);
-    _mapController?.animateCamera(
-      CameraUpdate.newLatLngZoom(position, mapManager.defaultZoom),
-    );
-
-    setState(() {
-      _markers.clear();
-      _markers.add(
-        Marker(
-          markerId: MarkerId(placeDetail.name),
-          position: position,
-          infoWindow: InfoWindow(
-            title: placeDetail.name,
-          ),
-        ),
-      );
-    });
   }
 }
 

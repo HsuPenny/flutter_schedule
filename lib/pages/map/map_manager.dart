@@ -15,6 +15,8 @@ class MapManager {
   late GoogleMapController controller;
   LatLng latLng = const LatLng(-1, -1);
 
+  final Set<Marker> markers = {};
+
   final defaultZoom = 15.0; // 預設縮放等級
 
   MarkerId? pendingMarkerId;      // 待顯示資訊視窗的marker
@@ -27,19 +29,25 @@ class MapManager {
   }
 
   /// 移動地圖畫面到指定座標，可選擇顯示marker
-  void moveCameraTo(LatLng latLng, {String? serialNumber}) {
+  void moveCameraTo(LatLng latLng, {String? placeName}) {
+    latLng = latLng;
     CameraPosition currentPosition = CameraPosition(
       target: latLng,
       zoom: defaultZoom,
     );
     controller.animateCamera(CameraUpdate.newCameraPosition(currentPosition));
 
-    if (serialNumber != null) {
-      pendingMarkerId = MarkerId(serialNumber);
-    } else {
-      pendingMarkerId = null;
+    if (placeName != null) {
+      markers.add(
+        Marker(
+          markerId: MarkerId(placeName),
+          position: latLng,
+          infoWindow: InfoWindow(
+            title: placeName,
+          ),
+        ),
+      );
     }
-    _showPendingMarkerInfo();
   }
 
   /// 搜尋地點
@@ -89,11 +97,5 @@ class MapManager {
     final data = jsonDecode(response.body);
     final place = PlaceDetail.fromJson(data);
     return place;
-  }
-
-  /// 顯示待顯示marker的資訊視窗
-  Future<void> _showPendingMarkerInfo() async {
-    if (pendingMarkerId == null) return;
-    await controller.showMarkerInfoWindow(pendingMarkerId!);
   }
 }

@@ -46,7 +46,7 @@ class _AddRecordStep2PageState extends State<AddRecordStep2Page> {
   }
 
   Widget get body {
-    return Column(
+    return Obx(() => Column(
       children: [
         Expanded(
             child: Container(
@@ -81,7 +81,7 @@ class _AddRecordStep2PageState extends State<AddRecordStep2Page> {
         ),
         footer
       ],
-    );
+    ));
   }
   Widget get footer {
     return Container(
