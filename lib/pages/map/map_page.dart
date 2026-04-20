@@ -86,7 +86,7 @@ class _MapPageState extends State<MapPage> {
           child: _SearchBar(
             onSearch: (List<PlaceSuggestion> list) {
               if (list.isEmpty) {
-                showToast(message: "沒有相關地點");
+                showToast(context: context, message: "沒有相關地點");
                 return;
               }
 
@@ -99,14 +99,7 @@ class _MapPageState extends State<MapPage> {
                     places: list,
                     onSelect: (place) async {
                       PlaceDetail placeDetail = await mapManager.getPlaceDetail(place.placeId);
-                      _mapController?.animateCamera(
-                        CameraUpdate.newCameraPosition(
-                          CameraPosition(
-                            target: LatLng(placeDetail.lat, placeDetail.lng),
-                            zoom: mapManager.defaultZoom
-                          )
-                        )
-                      );
+                      showPlaceOnMap(placeDetail);
                       Get.back();
                     }
                   ),
@@ -135,6 +128,26 @@ class _MapPageState extends State<MapPage> {
         ),
       ],
     );
+  }
+
+  void showPlaceOnMap(PlaceDetail placeDetail) {
+    final position = LatLng(placeDetail.lat, placeDetail.lng);
+    _mapController?.animateCamera(
+      CameraUpdate.newLatLngZoom(position, mapManager.defaultZoom),
+    );
+
+    setState(() {
+      _markers.clear();
+      _markers.add(
+        Marker(
+          markerId: MarkerId(placeDetail.name),
+          position: position,
+          infoWindow: InfoWindow(
+            title: placeDetail.name,
+          ),
+        ),
+      );
+    });
   }
 }
 

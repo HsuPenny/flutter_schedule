@@ -82,6 +82,7 @@ class MapManager {
       headers: {
         "X-Goog-Api-Key": ApiConfig.googleApiKey,
         "X-Goog-FieldMask": "location,displayName",
+        "Accept-Language": "zh-TW",
       },
     );
 
