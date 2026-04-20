@@ -40,23 +40,23 @@ class _LocationItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const SizedBox(width: 12),
+        const SizedBox(width: 16),
         Container(
-          width: 24,
-          height: 24,
+          width: 28,
+          height: 28,
           decoration: BoxDecoration(
-            color: MyColor.lightGrey,
+            color: MyColor.aqua.withAlpha(70),
             borderRadius: BorderRadius.circular(24)
           ),
-          child: const Icon(Icons.place, color: MyColor.aqua, size: 20),
+          child: const Icon(Icons.place, color: MyColor.darkAqua, size: 20),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(place.mainText, style: MyTextStyle.darkGrey(16)),
-              Text(place.secondaryText, style: MyTextStyle.lightGrey(14)),
+              Text(place.mainText, style: MyTextStyle.black(16)),
+              Text(place.secondaryText, style: MyTextStyle.darkGrey(13)),
             ],
           )
         )
