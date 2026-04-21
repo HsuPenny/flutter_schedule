@@ -1,4 +1,5 @@
 import 'package:app_schedule/controllers/location_controller.dart';
+import 'package:app_schedule/controllers/record_controller.dart';
 import 'package:app_schedule/controllers/record_filter_controller.dart';
 import 'package:app_schedule/my_color.dart';
 import 'package:app_schedule/pages/loading_page.dart';
@@ -10,6 +11,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   Get.put(FilterController());
+  Get.put(RecordController());
   Get.put(LocationController());
 
   runApp(const MyApp());
